@@ -1,0 +1,42 @@
+{
+    "name": "wikipedia-multi-language-search",
+    "version": "1.0.0",
+    "description": "wikipedia-multi-language-search",
+    "main": "main.js",
+    "scripts": {
+        "build": "rmdir /s /q dist || webpack --mode production",
+        "start": "webpack-dev-server --mode development --open",
+        "predeploy": "npm run build",
+        "deploy": "gh-pages -d dist",
+        "eslint": "eslint . --format visualstudio"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/garystephens/wikipedia-multi-language-search.git"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/garystephens/wikipedia-multi-language-search/issues"
+    },
+    "homepage": "https://garystephens.github.io/wikipedia-multi-language-search/",
+    "devDependencies": {
+        "@babel/core": "^7.14.3",
+        "@babel/preset-env": "^7.14.4",
+        "babel-loader": "^8.2.2",
+        "copy-webpack-plugin": "^6.4.1",
+        "css-loader": "^5.2.6",
+        "eslint": "^7.27.0",
+        "eslint-config-prettier": "^6.15.0",
+        "gh-pages": "^3.2.0",
+        "html-webpack-plugin": "^4.5.2",
+        "jquery": "^3.6.0",
+        "normalize.css": "^8.0.1",
+        "prettier": "^2.3.0",
+        "style-loader": "^2.0.0",
+        "webpack": "^4.46.0",
+        "webpack-cli": "^3.3.12",
+        "webpack-dev-server": "^3.11.2"
+    }
+}

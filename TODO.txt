@@ -1,0 +1,3 @@
+NEXT VERSION
+Allow search term to be in any language (add a dropdown for language), only include languages supported by Wikipedia
+Cross-link to Random Wikipedia page
