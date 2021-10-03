@@ -1,3 +1,6 @@
+BUGS
+When you go back to the page from another site, the search results are not shown
+
 NEXT VERSION
 Allow search term to be in any language (add a dropdown for language), only include languages supported by Wikipedia
 Cross-link to Random Wikipedia page

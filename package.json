@@ -4,7 +4,7 @@
     "description": "wikipedia-multi-language-search",
     "main": "main.js",
     "scripts": {
-        "build": "rmdir /s /q dist || webpack --mode production",
+        "build": "rmdir /s /q dist && webpack --mode production",
         "start": "webpack-dev-server --mode development --open",
         "predeploy": "npm run build",
         "deploy": "gh-pages -d dist",
