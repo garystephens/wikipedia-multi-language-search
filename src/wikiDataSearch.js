@@ -3,14 +3,19 @@ import { languageNameFromCode } from './languageList';
 
 const WIKIDATA_SEARCH_URL = `https://www.wikidata.org/w/api.php?origin=*&action=wbgetentities&titles=%TITLE_VARIATIONS%&sites=enwiki&format=json&props=sitelinks`;
 
-function wikiDataSearch(titleVariations, callbackOnComplete) {
-    $.get({
-        url: WIKIDATA_SEARCH_URL.replace(/%TITLE_VARIATIONS%/, titleVariations),
-        data: null,
-        success: function (wikiData) {
-            const languageList = convertWikiDataToLanguageList(wikiData);
-            callbackOnComplete(languageList);
-        },
+function generateWikiDataSearchUrl(titleVariations) {
+    return WIKIDATA_SEARCH_URL.replace(/%TITLE_VARIATIONS%/, titleVariations);
+}
+
+function getLanguageListFromWikiData(titleVariations) {
+    return new Promise((resolve) => {
+        $.get({
+            url: generateWikiDataSearchUrl(titleVariations),
+            data: null,
+            success: (wikiData) => {
+                resolve(convertWikiDataToLanguageList(wikiData));
+            },
+        });
     });
 }
 
@@ -43,12 +48,12 @@ function generateLanguageList(entities) {
     for (let name in entities) {
         for (let sitelink in entities[name].sitelinks) {
             const languageCode = sitelink.replace('wiki', '');
+            const title = entities[name].sitelinks[sitelink].title.replace(
+                / /g,
+                '_'
+            );
 
             if (languageCode.length === 2) {
-                const title = entities[name].sitelinks[sitelink].title.replace(
-                    / /g,
-                    '_'
-                );
                 languageList.push({
                     languageCode: languageCode,
                     languageName: languageNameFromCode(languageCode),
@@ -61,4 +66,4 @@ function generateLanguageList(entities) {
     return languageList;
 }
 
-export { wikiDataSearch };
+export { getLanguageListFromWikiData };

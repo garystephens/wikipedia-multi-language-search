@@ -1,8 +1,11 @@
 ﻿import $ from 'jquery';
 
+// eslint-disable-next-line no-unused-vars
+import regeneratorRuntime from 'regenerator-runtime';
+
 import { languageNameFromCode } from './languageList';
 import { generateTitleVariations } from './titleVariations';
-import { wikiDataSearch } from './wikiDataSearch';
+import { getLanguageListFromWikiData } from './wikiDataSearch';
 import { openGoogleTranslateTab } from './googleTranslate';
 
 import 'normalize.css';
@@ -32,14 +35,14 @@ function setIframeHeight() {
     );
 }
 
-function search() {
+async function search() {
     const searchKeywords = $('#searchKeywords').val().trim();
     const titleVariations = generateTitleVariations(searchKeywords);
 
     $('#languageLinks').text('Searching...');
     setIframeHeight();
 
-    wikiDataSearch(titleVariations, displayResults);
+    displayLanguageList(await getLanguageListFromWikiData(titleVariations));
 }
 
 function changeIframeContents($element, url) {
@@ -96,22 +99,23 @@ function displayResultsNoneFound() {
     $('#languageCode').val('');
 }
 
-function displayResults(results) {
+function displayLanguageList(results) {
     if (results.length === 0) {
         displayResultsNoneFound();
-    } else {
-        $('#languageLinks').empty();
-        results.forEach(function (result, index) {
-            const $link = createLanguageLink(result.languageCode, result.title);
-            $('#languageLinks').append($link);
-            if (index < results.length - 1) {
-                $('#languageLinks').append(' / ');
-            }
-            if (result.languageCode === 'en') {
-                $link.trigger('click');
-            }
-        });
+        return;
     }
+
+    $('#languageLinks').empty();
+    results.forEach(function (result, index) {
+        const $link = createLanguageLink(result.languageCode, result.title);
+        $('#languageLinks').append($link);
+        if (index < results.length - 1) {
+            $('#languageLinks').append(' / ');
+        }
+        if (result.languageCode === 'en') {
+            $link.trigger('click');
+        }
+    });
 
     setIframeHeight();
 }
