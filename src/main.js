@@ -2,6 +2,8 @@
 
 import { languageNameFromCode } from './languageList';
 import { generateTitleVariations } from './titleVariations';
+import { wikiDataSearch } from './wikiDataSearch';
+import { openGoogleTranslateTab } from './googleTranslate';
 
 import 'normalize.css';
 import './general.css';
@@ -37,11 +39,7 @@ function search() {
     $('#languageLinks').text('Searching...');
     setIframeHeight();
 
-    $.get({
-        url: `https://www.wikidata.org/w/api.php?origin=*&action=wbgetentities&titles=${titleVariations}&sites=enwiki&format=json&props=sitelinks`,
-        data: null,
-        success: showResults,
-    });
+    wikiDataSearch(titleVariations, displayResults);
 }
 
 function changeIframeContents($element, url) {
@@ -90,41 +88,6 @@ function iframeHasLoaded() {
     }
 }
 
-function processWikiDataResults(data) {
-    const results = [];
-
-    if (data.entities) {
-        for (let name in data.entities) {
-            if (name[0] !== '-') {
-                for (let sitelink in data.entities[name].sitelinks) {
-                    const languageCode = sitelink.replace('wiki', '');
-
-                    if (languageCode.length === 2) {
-                        const title = data.entities[name].sitelinks[
-                            sitelink
-                        ].title.replace(/ /g, '_');
-                        results.push({
-                            languageCode: languageCode,
-                            languageName: languageNameFromCode(languageCode),
-                            title: title,
-                        });
-                    }
-                }
-                break;
-            }
-        }
-    }
-
-    return results.sort(function compareByLanguageName(a, b) {
-        return a.languageName > b.languageName ? 1 : -1;
-    });
-}
-
-function showResults(wikiData) {
-    const results = processWikiDataResults(wikiData);
-    displayResults(results);
-}
-
 function displayResultsNoneFound() {
     $('#languageLinks').text(
         'No results found. (The search is sometimes case-sensitive. Try capitalising the page title exactly as in Wikipedia.)'
@@ -145,19 +108,12 @@ function displayResults(results) {
                 $('#languageLinks').append(' / ');
             }
             if (result.languageCode === 'en') {
-                $link.click();
+                $link.trigger('click');
             }
         });
     }
 
     setIframeHeight();
-}
-
-function openGoogleTranslateTab(language, pageUrl) {
-    const urlEncodedPageUrl = encodeURIComponent(pageUrl);
-    window.open(
-        `https://translate.google.com/translate?hl=&sl=${language}&tl=en&u=${urlEncodedPageUrl}`
-    );
 }
 
 function translatePage() {

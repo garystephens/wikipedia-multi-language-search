@@ -1,9 +1,9 @@
 function toTitleCase(str) {
-    const splitStr = str.toLowerCase().split(' ');
-    for (let i = 0; i < splitStr.length; i++) {
-        splitStr[i] = capitalizeFirstLetter(splitStr[i]);
-    }
-    return splitStr.join(' ');
+    return str
+        .toLowerCase()
+        .split(' ')
+        .map((word) => capitalizeFirstLetter(word))
+        .join(' ');
 }
 
 // Try to convert title to typical capitalisation used by Wikipedia
