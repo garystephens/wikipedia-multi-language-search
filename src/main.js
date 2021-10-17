@@ -65,9 +65,9 @@ function createLanguageLink(languageCode, title) {
         '-'
     )}.wikipedia.org/wiki/${title}`;
     const $languageLink = $(
-        `<a href="javascript:void(0)" class="languageLink language_${languageCode}" title=${languageNameFromCode(
+        `<a href="javascript:void(0)" class="languageLink language_${languageCode}" title="View equivalent page in ${languageNameFromCode(
             languageCode
-        )}>${languageNameFromCode(languageCode)}</a>`
+        )}">${languageNameFromCode(languageCode)}</a>`
     );
     $languageLink.on('click', function () {
         iframeLoadCount = 0;
@@ -116,17 +116,17 @@ function displayResultsNoneFound() {
     $('#languageCode').val('');
 }
 
-function displayLanguageList(results) {
-    if (results.length === 0) {
+function displayLanguageList(languageList) {
+    if (languageList.length === 0) {
         displayResultsNoneFound();
         return;
     }
 
     $('#languageLinks').empty();
-    results.forEach(function (result, index) {
+    languageList.forEach(function (result, index) {
         const $link = createLanguageLink(result.languageCode, result.title);
         $('#languageLinks').append($link);
-        if (index < results.length - 1) {
+        if (index < languageList.length - 1) {
             $('#languageLinks').append(' / ');
         }
         if (result.languageCode === 'en') {

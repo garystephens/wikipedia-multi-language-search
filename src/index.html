@@ -20,14 +20,14 @@
 
             gtag('config', 'UA-128490828-1');
         </script>
-
     </head>
     <body>
         <div id="header">
             <h1>Wikipedia Multi-Language Search</h1>
             <form action="javascript:void(0);" id="controls">
                 <div id="tagline">
-                    Enter the English language title of a page, and we list all language versions of that page
+                    Enter the English language title of a page, and we list all
+                    language versions of that page
                 </div>
                 <b>English language page title:</b>
                 <input id="searchKeywords" value="" />
@@ -35,7 +35,11 @@
                 <p id="languageLinks"></p>
                 <div>
                     <input id="languageCode" type="hidden" />
-                    <a id="aboutLanguage" target="_blank"></a>
+                    <a
+                        id="aboutLanguage"
+                        target="_blank"
+                        title="Do a Google search to find out more about this language (opens new tab)"
+                    ></a>
                     &nbsp;&nbsp;&nbsp;&nbsp;
                     <input
                         id="translate"
@@ -44,21 +48,20 @@
                         value="Translate page to English"
                     />
                 </div>
-            </div>
+            </form>
         </div>
         <iframe
             id="wikipedia_page_iframe"
             name="wikipedia_page_iframe"
             src="about:blank"
         ></iframe>
-    	<div id="footer">
-    		<div style="float:right">
-    			<span>
-    				<a href="../">Other useful sites</a>
-    			</span>
-    		</div>
-    		<div style="clear:both">
-    		</div>
-    	</div>        
+        <div id="footer">
+            <div style="float: right">
+                <span>
+                    <a href="../">Other useful sites</a>
+                </span>
+            </div>
+            <div style="clear: both"></div>
+        </div>
     </body>
 </html>
