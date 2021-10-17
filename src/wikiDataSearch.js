@@ -53,7 +53,15 @@ function generateLanguageList(entities) {
                 '_'
             );
 
-            if (languageCode.length === 2) {
+            if (
+                !languageCode.endsWith('quote') &&
+                !languageCode.endsWith('news') &&
+                !languageCode.endsWith('books') &&
+                !languageCode.endsWith('source') &&
+                !languageCode.endsWith('versity') &&
+                !languageCode.endsWith('incubator') &&
+                !languageCode.endsWith('voyage')
+            ) {
                 languageList.push({
                     languageCode: languageCode,
                     languageName: languageNameFromCode(languageCode),
