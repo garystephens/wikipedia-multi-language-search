@@ -40,6 +40,7 @@ async function search() {
     const titleVariations = generateTitleVariations(searchKeywords);
 
     $('#languageLinks').text('Searching...');
+    $('#aboutLanguage').css('visibility', 'hidden');
     setIframeHeight();
 
     displayLanguageList(await getLanguageListFromWikiData(titleVariations));
@@ -59,7 +60,10 @@ function removeHightlightingOfSelectedLanguage() {
 }
 
 function createLanguageLink(languageCode, title) {
-    const url = `https://${languageCode}.wikipedia.org/wiki/${title}`;
+    const url = `https://${languageCode.replace(
+        /_/g,
+        '-'
+    )}.wikipedia.org/wiki/${title}`;
     const $languageLink = $(
         `<a href="javascript:void(0)" class="languageLink language_${languageCode}" title=${languageNameFromCode(
             languageCode
@@ -68,6 +72,7 @@ function createLanguageLink(languageCode, title) {
     $languageLink.on('click', function () {
         iframeLoadCount = 0;
         $('#translate').css('visibility', '');
+        $('#aboutLanguage').css('visibility', '');
         changeIframeContents($('#wikipedia_page_iframe'), url);
         $('#languageCode').val(languageCode);
 
@@ -78,6 +83,18 @@ function createLanguageLink(languageCode, title) {
         $(this).css('cursor', 'auto');
 
         $('#translate').prop('disabled', $(this).attr('title') === 'English');
+        if (languageCode !== 'en') {
+            $('#aboutLanguage')
+                .text(`About ${languageNameFromCode(languageCode)}`)
+                .attr(
+                    'href',
+                    `https://www.google.com/search?q=${languageNameFromCode(
+                        languageCode
+                    ).replace(/ /g, '+')}+language`
+                );
+        } else {
+            $('#aboutLanguage').css('visibility', 'hidden');
+        }
     });
     return $languageLink;
 }
