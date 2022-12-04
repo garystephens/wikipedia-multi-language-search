@@ -272,7 +272,7 @@
     { code: 'nqo', name: "N'Ko" },
     { code: 'nrm', name: 'Norman' },
     { code: 'nso', name: 'Northern Sotho' },
-    { code: 'olo', name: 'Livvi' },
+    { code: 'olo', name: 'Livvi-Karelian' },
     { code: 'pag', name: 'Pangasinan' },
     { code: 'pam', name: 'Kapampangan' },
     { code: 'pap', name: 'Papiamentu' },
