@@ -22,6 +22,12 @@
     padding: 6px;
 }
 
+#languageLinksBox {
+    max-height: 20vh;
+    overflow-y: auto;
+    margin-bottom: 10px;
+}
+
 #languageLinks {
     padding-left: 10px;
     padding-right: 10px;
